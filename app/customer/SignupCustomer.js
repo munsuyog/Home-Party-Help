@@ -34,6 +34,7 @@ const SignupCustomer = () => {
   const [loading, setLoading] = useState(false);
 
   const [object, setObject] = useState({ user: "Customer" });
+  console.log(object);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -61,7 +62,6 @@ const SignupCustomer = () => {
         imageUri
       ) {
         const userData = await CustomerSignup(email, password, object);
-        await saveUserData(userData);
         setLoading(false);
         router.push({ pathname: '/customer/app/Services/ServicesScreen', params: userData });
       } else {
