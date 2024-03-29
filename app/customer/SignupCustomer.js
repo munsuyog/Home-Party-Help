@@ -17,10 +17,11 @@ import { fontFamily } from "../../styles/fontStyles";
 import { Path, Svg } from "react-native-svg";
 import ButtonSecondary from "../../components/common/ButtonSecondary/ButtonSecondary";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomerSignup } from "../../utils/firebase";
+import { CustomerSignup, editProfile, getUserDataById } from "../../utils/firebase";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { saveUserData } from "../../utils/useSecureStorage";
+import EditProfile from "./app/Profile/EditProfile";
 
 const SignupCustomer = () => {
   const [email, setEmail] = useState(null);
@@ -62,6 +63,11 @@ const SignupCustomer = () => {
         imageUri
       ) {
         const userData = await CustomerSignup(email, password, object);
+        const imageUrl = await uploadImageToStorage(imageUri, userId);
+        userData.imageUri = imageUrl;
+        await editProfile("Customer", userData.uid, object);
+        const udata = await getUserDataById(userData.uid)
+        await saveUserData(udata);
         setLoading(false);
         router.push({ pathname: '/customer/app/Services/ServicesScreen', params: userData });
       } else {
