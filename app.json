@@ -1,0 +1,76 @@
+{
+  "expo": {
+    "name": "Home Party Help",
+    "slug": "home-party-help",
+    "version": "1.5.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/images/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.homepartyhelp.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.homepartyhelp.app"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow your location service to find the nearby providers.",
+          "locationAlwaysPermission": "Allow your location service to find the nearby providers.",
+          "locationWhenInUsePermission": "Allow your location service to find the nearby providers."
+        }
+      ],
+      [
+        "expo-tracking-transparency",
+        {
+          "userTrackingPermission": "Allow this app to collect app-related data that can be used for tracking you or your device."
+        }
+      ],
+      [
+      "@sentry/react-native/expo",
+        {
+          "organization": "suyog-mundhe",
+          "project": "react-native"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "d9932b81-1a93-47ce-ab0f-450ab90e9675"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/d9932b81-1a93-47ce-ab0f-450ab90e9675"
+    }
+  }
+}
