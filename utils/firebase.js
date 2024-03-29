@@ -75,8 +75,8 @@ const firebaseConfig = {
           const userCredential = await createUserWithEmailAndPassword(auth, email, password);
           const user = userCredential.user;
           console.log('User signed up:', user.uid);
-          const imageUrl = await uploadImageToStorage(object.imageUri, user.uid);
-          object.imageUri = imageUrl
+        //   const imageUrl = await uploadImageToStorage(object.imageUri, user.uid);
+        //   object.imageUri = imageUrl
           await setDoc(doc(db, "Customers", user.uid), object);
           return user;
       } catch (error) {
