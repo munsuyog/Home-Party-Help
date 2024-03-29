@@ -56,8 +56,8 @@ const SignupCustomer = () => {
         name &&
         email &&
         phoneNumber &&
-        pincode &&
-        address &&
+        zipcode &&
+        country &&
         imageUri
       ) {
         const userData = await CustomerSignup(email, password, object);
