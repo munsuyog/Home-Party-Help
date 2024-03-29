@@ -143,7 +143,7 @@ const SignupCustomer = () => {
             </View>
             <View style={styles.inputWrapper}>
               <TextInput
-                value={address}
+                value={country}
                 onChangeText={(text) => {
                   setCountry(text);
                   setObject({ ...object, country: text });
