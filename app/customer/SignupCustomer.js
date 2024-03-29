@@ -26,9 +26,8 @@ const SignupCustomer = () => {
   const [email, setEmail] = useState(null);
   const [name, setName] = useState(null);
   const [password, setPassword] = useState(null);
-  const [address, setAddress] = useState(null);
-  const [city, setCity] = useState(null);
-  const [pincode, setPincode] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [zipcode, setZipcode] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState(null);
   const [imageUri, setImageUri] = useState(null);
   const [error, setError] = useState(null);
@@ -54,18 +53,17 @@ const SignupCustomer = () => {
     setLoading(true);
     try {
       if (
-        object.name &&
-        object.email &&
-        object.phone &&
-        object.zipcode &&
-        object.country &&
-        object.imageUri
+        name &&
+        email &&
+        phoneNumber &&
+        pincode &&
+        address &&
+        imageUri
       ) {
         const userData = await CustomerSignup(email, password, object);
         await saveUserData(userData);
         setLoading(false);
         router.push({ pathname: '/customer/app/Services/ServicesScreen', params: userData });
-
       } else {
         setLoading(false);
         setError("Enter all the details");
@@ -80,7 +78,7 @@ const SignupCustomer = () => {
       }
     }
   };
-
+  
   return (
     <SafeAreaView style={[commonStyles.container, { width: "100%" }]}>
       <KeyboardAvoidingView
@@ -133,6 +131,7 @@ const SignupCustomer = () => {
               <TextInput
                 value={name}
                 onChangeText={(text) => {
+                  setName(text);
                   setObject({ ...object, name: text });
                 }}
                 placeholder="Enter Name"
@@ -146,6 +145,7 @@ const SignupCustomer = () => {
               <TextInput
                 value={address}
                 onChangeText={(text) => {
+                  setCountry(text);
                   setObject({ ...object, country: text });
                 }}
                 placeholder="Enter Country"
@@ -157,8 +157,9 @@ const SignupCustomer = () => {
             </View>
             <View style={styles.inputWrapper}>
               <TextInput
-                value={pincode}
+                value={zipcode}
                 onChangeText={(text) => {
+                  setZipcode(text);
                   setObject({ ...object, zipcode: text });
                 }}
                 placeholder="Enter zipcode"
@@ -172,6 +173,7 @@ const SignupCustomer = () => {
               <TextInput
                 value={phoneNumber}
                 onChangeText={(text) => {
+                  setPhoneNumber(text);
                   setObject({ ...object, phone: text });
                 }}
                 keyboardType="phone-pad"
