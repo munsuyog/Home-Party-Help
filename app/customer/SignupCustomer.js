@@ -58,16 +58,16 @@ const SignupCustomer = () => {
         const userData = await CustomerSignup(email, password, object);
   
         // Upload image to storage
-        const imageUrl = await uploadImageToStorage(imageUri, userData.uid);
+        // const imageUrl = await uploadImageToStorage(imageUri, userData.uid);
   
-        // Update user profile with image URL
-        await storeUserDataInFirestore(userData.uid, { ...object, imageUri: imageUrl, id: userData.uid }, "Customers");
+        // // Update user profile with image URL
+        // await storeUserDataInFirestore(userData.uid, { ...object, imageUri: imageUrl, id: userData.uid }, "Customers");
   
-        // Fetch updated user data
-        const updatedUserData = await getUserDataById(userData.uid);
+        // // Fetch updated user data
+        // const updatedUserData = await getUserDataById(userData.uid);
   
-        // Save updated user data locally
-        await saveUserData(updatedUserData);
+        // // Save updated user data locally
+        // await saveUserData(updatedUserData);
   
         setLoading(false);
   
