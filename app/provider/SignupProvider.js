@@ -102,16 +102,6 @@ const SignupProvider = () => {
             <Text style={[styles.signupHead, fontFamily.poppins600]}>
               Sign Up as Provider
             </Text>
-            <TouchableOpacity
-              onPress={pickImage}
-              style={styles.profileImageWrapper}
-            >
-              {imageUri ? (
-                <Image source={{ uri: imageUri }} style={styles.profileImage} />
-              ) : (
-                <Text style={styles.profileImagePlaceholder}>Add Photo</Text>
-              )}
-            </TouchableOpacity>
             <View style={styles.inputWrapper}>
               <TextInput
                 value={email}
