@@ -17,11 +17,10 @@ import { fontFamily } from "../../styles/fontStyles";
 import { Path, Svg } from "react-native-svg";
 import ButtonSecondary from "../../components/common/ButtonSecondary/ButtonSecondary";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomerSignup, editProfile, getUserDataById } from "../../utils/firebase";
+import { CustomerSignup, editProfile, getUserDataById, storeUserDataInFirestore, uploadImageToStorage } from "../../utils/firebase";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { saveUserData } from "../../utils/useSecureStorage";
-import EditProfile from "./app/Profile/EditProfile";
 
 const SignupCustomer = () => {
   const [email, setEmail] = useState(null);
@@ -54,22 +53,26 @@ const SignupCustomer = () => {
   const onSignupPress = async () => {
     setLoading(true);
     try {
-      if (
-        name &&
-        email &&
-        phoneNumber &&
-        zipcode &&
-        country &&
-        imageUri
-      ) {
+      if (name && email && phoneNumber && zipcode && country && imageUri) {
+        // Sign up the user
         const userData = await CustomerSignup(email, password, object);
-        const imageUrl = await uploadImageToStorage(imageUri, userId);
-        userData.imageUri = imageUrl;
-        await editProfile("Customer", userData.uid, object);
-        const udata = await getUserDataById(userData.uid)
-        await saveUserData(udata);
+  
+        // Upload image to storage
+        const imageUrl = await uploadImageToStorage(imageUri, userData.uid);
+  
+        // Update user profile with image URL
+        await storeUserDataInFirestore(userData.uid, { ...object, imageUri: imageUrl, id: userData.uid }, "Customers");
+  
+        // Fetch updated user data
+        const updatedUserData = await getUserDataById(userData.uid);
+  
+        // Save updated user data locally
+        await saveUserData(updatedUserData);
+  
         setLoading(false);
-        router.push({ pathname: '/customer/app/Services/ServicesScreen', params: userData });
+  
+        // Navigate to ServicesScreen
+        router.push({ pathname: '/customer/app/Services/ServicesScreen', params: updatedUserData });
       } else {
         setLoading(false);
         setError("Enter all the details");
@@ -82,8 +85,10 @@ const SignupCustomer = () => {
       if (error.code === "auth/weak-password") {
         setError("Weak Password");
       }
+      console.error('Sign up error:', error);
     }
   };
+  
   
   return (
     <SafeAreaView style={[commonStyles.container, { width: "100%" }]}>

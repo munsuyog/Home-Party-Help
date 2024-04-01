@@ -28,7 +28,7 @@ const firebaseConfig = {
   const db = getFirestore();
   
 
-  const uploadImageToStorage = async (fileUrl, userId) => {
+  export const uploadImageToStorage = async (fileUrl, userId) => {
     try {
         // Get reference to the storage service
         const storage = getStorage();
@@ -498,27 +498,22 @@ export async function loginWithService(email, password, service) {
 
 // Providers - Signup
 
-export async function signupWithService(email, password, object, service) {
+export async function signupWithService(email, password, object) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        console.log('User signed up:', user.uid);
-        const imageUrl = await uploadImageToStorage(object.imageUri, user.uid);
-        object.imageUri = imageUrl;
-        object.service = service;
-        object.id = user.uid;
-        await setDoc(doc(db, "Providers", user.uid), object);
-        const userRef = doc(db, "Providers", user.uid); // Reference to the specific service collection
-        const userInfoRef = await getDoc(userRef);
-        const userInfo = userInfoRef.data()
-        const userData = userInfo
-        return userData;
+        // console.log('User signed up:', user.uid);
+        // await setDoc(doc(db, "Providers", user.uid), object);
+        // const userRef = doc(db, "Providers", user.uid); // Reference to the specific service collection
+        // const userInfoRef = await getDoc(userRef);
+        // const userInfo = userInfoRef.data()
+        // const userData = userInfo
+        return user;
     } catch (error) {
-        console.error(`Sign up error for ${service}:`, error);
+        console.error(`Sign up error:`, error);
         throw error;
     }
 }
-
 export async function updateProviderLocation(providerId, latitude, longitude, address) {
     try {
         // Get a reference to the provider document
@@ -661,6 +656,22 @@ export async function deleteUserAccount(email, password) {
         console.log('User account deleted successfully');
     } catch (error) {
         console.error('Error deleting user account:', error);
+        throw error;
+    }
+}
+
+// Function to store user data in Firestore after signing up
+export async function storeUserDataInFirestore(userId, userData, collectionName) {
+    try {
+        // Get a reference to the Firestore collection
+        const collectionRef = collection(db, collectionName);
+
+        // Add user data to the collection
+        await setDoc(doc(collectionRef, userId), userData);
+
+        console.log('User data stored in Firestore successfully');
+    } catch (error) {
+        console.error('Error storing user data in Firestore:', error);
         throw error;
     }
 }

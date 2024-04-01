@@ -16,7 +16,7 @@ import { commonStyles } from "../../styles/commonStyles";
 import { fontFamily } from "../../styles/fontStyles";
 import ButtonSecondary from "../../components/common/ButtonSecondary/ButtonSecondary";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ProviderSignup, signupWithService } from "../../utils/firebase";
+import { ProviderSignup, signupWithService, storeUserDataInFirestore, uploadImageToStorage } from "../../utils/firebase";
 import * as ImagePicker from "expo-image-picker";
 import RNPickerSelect, { defaultStyles } from "react-native-picker-select";
 import { router, useLocalSearchParams } from "expo-router";
@@ -74,10 +74,11 @@ const SignupProvider = () => {
         const userInfo = await signupWithService(
           email,
           password,
-          object,
-          service
+          object
         );
-        await saveUserData(userInfo);
+        const imageUrl = await uploadImageToStorage(object.imageUri, userInfo.uid);
+        await storeUserDataInFirestore(userInfo.uid, {...object, service: service, imageUri, imageUrl, id: userInfo.uid}, "Providers")
+        await saveUserData({...object, service: service, imageUri, imageUrl, id: userInfo.uid})
         router.push({
           pathname: "/provider/app/Home/UpdateLocation",
           params: { id: userInfo.id },
