@@ -68,20 +68,17 @@ const SignupProvider = () => {
         object.email &&
         object.country &&
         object.zipcode &&
-        object.phone &&
-        object.imageUri
+        object.phone
       ) {
         const userInfo = await signupWithService(
           email,
           password,
           object
         );
-        const imageUrl = await uploadImageToStorage(object.imageUri, userInfo.uid);
-        await storeUserDataInFirestore(userInfo.uid, {...object, service: service, imageUri, imageUrl, id: userInfo.uid}, "Providers")
-        await saveUserData({...object, service: service, imageUri, imageUrl, id: userInfo.uid})
+        await storeUserDataInFirestore(userInfo.uid, {...object, service: service, id: userInfo.uid}, "Providers")
+        await saveUserData({...object, service: service, id: userInfo.uid})
         router.push({
-          pathname: "/provider/app/Home/UpdateLocation",
-          params: { id: userInfo.id },
+          pathname: "/provider/app/Home/UpdateLocation"
         });
       } else {
         setError("Enter all the details");
