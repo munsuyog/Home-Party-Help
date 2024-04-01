@@ -53,26 +53,20 @@ const SignupCustomer = () => {
   const onSignupPress = async () => {
     setLoading(true);
     try {
-      if (name && email && phoneNumber && zipcode && country && imageUri) {
+      if (name && email && phoneNumber && zipcode && country) {
         // Sign up the user
         const userData = await CustomerSignup(email, password, object);
   
-        // Upload image to storage
-        // const imageUrl = await uploadImageToStorage(imageUri, userData.uid);
+        // Update user profile with image URL
+        await storeUserDataInFirestore(userData.uid, { ...object, id: userData.uid }, "Customers");
   
-        // // Update user profile with image URL
-        // await storeUserDataInFirestore(userData.uid, { ...object, imageUri: imageUrl, id: userData.uid }, "Customers");
-  
-        // // Fetch updated user data
-        // const updatedUserData = await getUserDataById(userData.uid);
-  
-        // // Save updated user data locally
-        // await saveUserData(updatedUserData);
+        // Save updated user data locally
+        await saveUserData({ ...object, id: userData.uid });
   
         setLoading(false);
   
         // Navigate to ServicesScreen
-        router.push({ pathname: '/customer/app/Services/ServicesScreen', params: updatedUserData });
+        router.push({ pathname: '/customer/app/Services/ServicesScreen'});
       } else {
         setLoading(false);
         setError("Enter all the details");
@@ -101,16 +95,6 @@ const SignupCustomer = () => {
             <Text style={[styles.signupHead, fontFamily.poppins600]}>
               Sign Up as Customer
             </Text>
-            <TouchableOpacity
-              onPress={pickImage}
-              style={styles.profileImageWrapper}
-            >
-              {imageUri ? (
-                <Image source={{ uri: imageUri }} style={styles.profileImage} />
-              ) : (
-                <Text style={styles.profileImagePlaceholder}>Add Photo</Text>
-              )}
-            </TouchableOpacity>
             <View style={styles.inputWrapper}>
               <TextInput
                 value={email}
