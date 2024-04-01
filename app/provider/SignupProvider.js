@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     width: "90%",
-    height: 40,
+    height: 50,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

@@ -16,10 +16,12 @@ const ButtonSecondary = ({title, link, color, onPress, width, height}) => {
         borderWidth:1,
         borderStyle: 'solid',
         borderColor: '#EF4F5F',
+        
     }}>
         <Text style={[fontFamily.poppins400, {
         fontSize: 16,
-        color: color ? 'white' : '#EF4F5F'
+        color: color ? 'white' : '#EF4F5F',
+        textAlign: 'center'
     }]}>{title}</Text>
     </TouchableOpacity>
   )

@@ -73,6 +73,11 @@ const LoginCustomer = ({ navigation }) => {
                                 <Text style={[styles.registerText, fontFamily.poppins500]}>Create an account</Text>
                             </Pressable>
                         </View>
+                        <View>
+                            <Pressable onPress={() => { router.navigate('/customer/PasswordReset') }}>
+                                <Text style={[styles.registerText, fontFamily.poppins500]}>Forgot Password</Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>

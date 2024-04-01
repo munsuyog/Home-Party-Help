@@ -1,7 +1,7 @@
 // @ts-ignore 
 import { initializeApp } from "firebase/app";
 import { useState, useEffect } from "react";
-import { initializeAuth, createUserWithEmailAndPassword, getReactNativePersistence, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeAuth, createUserWithEmailAndPassword, getReactNativePersistence, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {doc, getDoc, getFirestore, setDoc, getDocs, collection, query, where, onSnapshot, addDoc, orderBy, collectionGroup, updateDoc } from 'firebase/firestore'
 import * as Notifications from 'expo-notifications';
@@ -675,3 +675,18 @@ export async function storeUserDataInFirestore(userId, userData, collectionName)
         throw error;
     }
 }
+
+// Function to send a password reset email
+export async function sendPasswordReset(email) {
+    try {
+        // Send a password reset email to the user's email address
+        await sendPasswordResetEmail(auth, email);
+
+        console.log('Password reset email sent successfully');
+    } catch (error) {
+        console.error('Error sending password reset email:', error);
+        throw error;
+    }
+}
+
+

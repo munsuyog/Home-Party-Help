@@ -84,6 +84,11 @@ const LoginProvider = ({}) => {
                             <Text style={[styles.registerText, fontFamily.poppins500]}>Create an account</Text>
                         </Pressable>
                     </View>
+                    <View>
+                        <Pressable onPress={() => {router.push({pathname: '/provider/PasswordReset', params: {service}})}}>
+                            <Text style={[styles.registerText, fontFamily.poppins500]}>Forgot Password</Text>
+                        </Pressable>
+                    </View>
                     <Text style={{color: 'red', fontSize: 14}}>{error ? error : ""}</Text>
                 </View>
             </KeyboardAvoidingView>
@@ -95,7 +100,7 @@ export default LoginProvider
 
 const styles = StyleSheet.create({
     loginWrapper: {
-        width: '90%',
+        width: '100%',
         padding: 20,
         borderRadius: 10, 
         borderColor: 'rgba(0,0,0,0.3)',
