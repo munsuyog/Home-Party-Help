@@ -2,13 +2,14 @@ import React from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Drawer } from 'expo-router/drawer';
 import { Ionicons, MaterialIcons } from '@expo/vector-icons';
+import { DrawerToggleButton } from '@react-navigation/drawer';
 
 export default function TabLayout() {
 
   
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer screenOptions={{drawerType:"front" ,drawerIcon: () => <Ionicons name='menu' color="black" size={20} />}}>
+      <Drawer screenOptions={{drawerType:"front" ,drawerIcon: () => <Ionicons name='menu' color="black" size={20} />, headerLeft:<DrawerToggleButton />}}>
       <Drawer.Screen name='ProviderDashboard' options={{headerTitle: "Dashboard", title: "Dashboard", drawerIcon: () => <Ionicons name="home" size={24} color="black" />}} />
       <Drawer.Screen name='PendingBookings' options={{headerTitle: "Pending Bookings", title: "Pending Bookings", drawerIcon: () => <MaterialIcons name="pending-actions" size={24} color="black" />}} />
       <Drawer.Screen name='CancelledBookings' options={{headerTitle: "Cancelled Bookings", title: "Cancelled Bookings", drawerIcon: () => <MaterialIcons name="cancel" size={24} color="black" />}} />
