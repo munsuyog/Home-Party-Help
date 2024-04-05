@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import PendingBooking from '../../../../../components/provider/Dashboard/Booking';
-import { getOrdersByStatusAndUser } from '../../../../../utils/firebase';
-import { acceptOrder, rejectOrder } from '../../../../../utils/firebase';
-import { getUserData } from '../../../../../utils/useSecureStorage';
+import PendingBooking from '../../../../components/provider/Dashboard/Booking';
+import { getOrdersByStatusAndUser } from '../../../../utils/firebase';
+import { acceptOrder, rejectOrder } from '../../../../utils/firebase';
+import { getUserData } from '../../../../utils/useSecureStorage';
 import { router } from 'expo-router';
 
 const PendingBookings = () => {

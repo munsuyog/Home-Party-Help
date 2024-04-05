@@ -41,7 +41,7 @@ const LoginProvider = ({}) => {
             if(userData != undefined) {
                 console.log(userData)
                 await saveUserData(userData);
-                router.push({pathname: '/provider/app/Home/Dashboard/ProviderDashboard', params: {id: userData.id}})
+                router.push({pathname: '/provider/app/Home/ProviderDashboard', params: {id: userData.id}})
             }
             else {
                 setError("Invalid credentials. Please check your email and password.")

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
-import PendingBooking from '../../../../../components/provider/Dashboard/Booking';
-import { getOrdersByStatusAndUser } from '../../../../../utils/firebase';
-import { acceptOrder, rejectOrder } from '../../../../../utils/firebase';
-import { getUserData } from '../../../../../utils/useSecureStorage';
+import PendingBooking from '../../../../components/provider/Dashboard/Booking';
+import { getOrdersByStatusAndUser } from '../../../../utils/firebase';
+import { acceptOrder, rejectOrder } from '../../../../utils/firebase';
+import { getUserData } from '../../../../utils/useSecureStorage';
 
-const CancelledBookings = () => {
+const ConfirmedBookings = () => {
     const [userData, setUserData] = useState(null);
     const [pendingBookings, setPendingBookings] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -27,12 +27,12 @@ const CancelledBookings = () => {
             try {
                 if (userData) {
                     setIsLoading(true);
-                    const pendingBookingsData = await getOrdersByStatusAndUser(userData.id, 'cancelled');
+                    const pendingBookingsData = await getOrdersByStatusAndUser(userData.id, 'completed');
                     setPendingBookings(pendingBookingsData);
                     setIsLoading(false);
                 }
             } catch (error) {
-                console.error('Error fetching cancelled bookings:', error);
+                console.error('Error fetching pending bookings:', error);
                 setIsLoading(false);
             }
         };
@@ -77,10 +77,10 @@ const CancelledBookings = () => {
                     ))
                 ))
             ) : (
-                <Text>No cancelled bookings found.</Text>
+                <Text>No Completed bookings found.</Text>
             )}
         </ScrollView>
     );
 };
 
-export default CancelledBookings;
+export default ConfirmedBookings;
