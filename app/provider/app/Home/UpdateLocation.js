@@ -150,7 +150,7 @@ const MapScreen = () => {
           <View style={{ backgroundColor: "white", padding: 20, borderRadius: 10 }}>
             <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 10 }}>Success!</Text>
             <Text style={{ marginBottom: 10 }}>Location updated successfully.</Text>
-            <Button title="Close" onPress={() => {setSuccessModalVisible(false); router.push({pathname: '/provider/app/Home/Dashboard/ProviderDashboard', params: {id: userData.id}})}} />
+            <Button title="Close" onPress={() => {setSuccessModalVisible(false); router.push({pathname: '/provider/app/Home/ProviderDashboard', params: {id: userData.id}})}} />
           </View>
         </View>
       </Modal>

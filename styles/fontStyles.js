@@ -12,5 +12,8 @@ import { StyleSheet } from "react-native"
     },
     poppins500: {
       fontFamily: 'Poppins_500Medium'
+    },
+    pacifico: {
+      fontFamily: 'Pacifico_400Regular'
     }
   })

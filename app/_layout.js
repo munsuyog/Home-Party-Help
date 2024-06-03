@@ -20,9 +20,12 @@ import { useFonts,
   Poppins_800ExtraBold,
   Poppins_800ExtraBold_Italic,
   Poppins_900Black,
-  Poppins_900Black_Italic } from '@expo-google-fonts/poppins';
+  Poppins_900Black_Italic,
+   } from '@expo-google-fonts/poppins';
 import NotificationsComponent from '../components/common/NotificationHandler/NotificationHandler';
 import * as Sentry from '@sentry/react-native';
+import {Pacifico_400Regular} from '@expo-google-fonts/pacifico'
+
 
 // Construct a new instrumentation instance. This is needed to communicate between the integration and React
 const routingInstrumentation = new Sentry.ReactNavigationInstrumentation();
@@ -68,6 +71,7 @@ function RootLayout() {
     Poppins_800ExtraBold_Italic,
     Poppins_900Black,
     Poppins_900Black_Italic,
+    Pacifico_400Regular
   });
 
   const ref = useNavigationContainerRef();

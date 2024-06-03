@@ -2,7 +2,7 @@
   "expo": {
     "name": "Home Party Help",
     "slug": "home-party-help",
-    "version": "1.5.0",
+    "version": "2.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -20,8 +20,9 @@
       "bundleIdentifier": "com.homepartyhelp.app"
     },
     "android": {
+      "versionCode": 3,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.homepartyhelp.app"
@@ -48,12 +49,13 @@
         }
       ],
       [
-      "@sentry/react-native/expo",
+        "@sentry/react-native/expo",
         {
           "organization": "suyog-mundhe",
           "project": "react-native"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

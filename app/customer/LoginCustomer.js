@@ -55,7 +55,7 @@ const LoginCustomer = ({ navigation }) => {
                             <Svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                 <Path d="M19 21C19 17.134 15.866 14 12 14C8.13401 14 5 17.134 5 21M12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7C16 9.20914 14.2091 11 12 11Z" stroke="black" stroke-opacity="0.25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                             </Svg>
-                            <TextInput value={email} onChangeText={setEmail} placeholder='Enter email' style={styles.input} />
+                            <TextInput autoCapitalize='none' value={email} onChangeText={setEmail} placeholder='Enter email' style={styles.input} />
                         </View>
                         <View style={styles.inputWrapper}>
                             <Svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     },
     loginHead: {
         textAlign: 'center',
-        fontSize: 30
+        fontSize: 28
     },
     inputWrapper: {
         flexDirection: 'row',
@@ -118,10 +118,10 @@ const styles = StyleSheet.create({
         flex: 1, // To make the input occupy remaining space
     },
     forgotText: {
-        fontSize: 18,
+        fontSize: 16,
     },
     registerText: {
-        fontSize: 18,
+        fontSize: 16,
         color: '#EF4F5F'
     }
 });

@@ -6,6 +6,7 @@ import { fontFamily } from '../../styles/fontStyles';
 import ButtonSecondary from '../../components/common/ButtonSecondary/ButtonSecondary';
 import { sendPasswordReset } from '../../utils/firebase';
 import { router } from 'expo-router';
+import ButtonPrimary from '../../components/common/ButtonPrimary/ButtonPrimary';
 
 const PasswordReset = () => {
     const [email, setEmail] = useState(null);
@@ -78,8 +79,8 @@ const PasswordReset = () => {
             >
                 <View style={styles.successModalContainer}>
                     <View style={styles.successModalContent}>
-                        <Text style={styles.successText}>Reset Email Sent on your Email!</Text>
-                        <Button title="Home" onPress={() => {setIsSuccessModalVisible(false); router.push('/')}} />
+                        <Text style={styles.successText}>You will receive a reset password mail if you are the user of Home Party Help</Text>
+                        <ButtonSecondary color title="Okay" onPress={() => {setIsSuccessModalVisible(false); router.push('/')}} />
                     </View>
                 </View>
             </Modal>
@@ -174,7 +175,7 @@ const PasswordReset = () => {
     },
     successText: {
         ...fontFamily.poppins400,
-        fontSize: 18,
+        fontSize: 16,
         marginBottom: 20,
     },
     });

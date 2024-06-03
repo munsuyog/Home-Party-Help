@@ -17,7 +17,7 @@ import { fontFamily } from "../../styles/fontStyles";
 import { Path, Svg } from "react-native-svg";
 import ButtonSecondary from "../../components/common/ButtonSecondary/ButtonSecondary";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { CustomerSignup, editProfile, getUserDataById, storeUserDataInFirestore, uploadImageToStorage } from "../../utils/firebase";
+import { CustomerSignup, editProfile, getUserDataById, sendWelcomeEmail, storeUserDataInFirestore, uploadImageToStorage } from "../../utils/firebase";
 import * as ImagePicker from "expo-image-picker";
 import { router } from "expo-router";
 import { saveUserData } from "../../utils/useSecureStorage";
@@ -62,6 +62,8 @@ const SignupCustomer = () => {
   
         // Save updated user data locally
         await saveUserData({ ...object, id: userData.uid });
+
+        await sendWelcomeEmail(email, name)
   
         setLoading(false);
   

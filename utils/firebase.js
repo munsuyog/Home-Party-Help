@@ -6,17 +6,17 @@ import {getStorage, ref, uploadBytes, getDownloadURL} from 'firebase/storage'
 import {doc, getDoc, getFirestore, setDoc, getDocs, collection, query, where, onSnapshot, addDoc, orderBy, collectionGroup, updateDoc } from 'firebase/firestore'
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyD6rDqFbvobVJL-RuUiRhd0zL3EtzqsPi0",
-    authDomain: "chatapp-6131e.firebaseapp.com",
-    databaseURL: "https://chatapp-6131e-default-rtdb.firebaseio.com",
-    projectId: "chatapp-6131e",
-    storageBucket: "chatapp-6131e.appspot.com",
-    messagingSenderId: "117924893445",
-    appId: "1:117924893445:web:451643480c022d05de9d6c",
-    measurementId: "G-HEQS56NX76"
+    apiKey: "AIzaSyAD1K5k0oYknvtNajc3dct_0yaPJ8KPgCw",
+    authDomain: "home-party-help.firebaseapp.com",
+    projectId: "home-party-help",
+    storageBucket: "home-party-help.appspot.com",
+    messagingSenderId: "1085682921589",
+    appId: "1:1085682921589:web:8db3a33c9752b86568483c",
+    measurementId: "G-HVF0K4TT9Q"
   };
 
 
@@ -50,24 +50,24 @@ const firebaseConfig = {
     }
 };
 
-  export const checkIfUserIsLoggedIn = async () => {
-    try {
-        // Check if user credentials are stored locally
-        if (email && password) {
-            // Attempt to sign in with stored credentials
-            const userCredential = await signInWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            const userRef=doc(db, service, user.uid);
-            const userInfo = await getDoc(userRef)
-            console.log(userInfo)
-            return userInfo.data();
-        } else {
-            console.log('No stored credentials found.');
-        }
-    } catch (error) {
-        console.error('Error checking user login status:', error);
-    }
-};
+//   export const checkIfUserIsLoggedIn = async () => {
+//     try {
+//         // Check if user credentials are stored locally
+//         if (email && password) {
+//             // Attempt to sign in with stored credentials
+//             const userCredential = await signInWithEmailAndPassword(email, password);
+//             const user = userCredential.user;
+//             const userRef=doc(db, service, user.uid);
+//             const userInfo = await getDoc(userRef)
+//             console.log(userInfo)
+//             return userInfo.data();
+//         } else {
+//             console.log('No stored credentials found.');
+//         }
+//     } catch (error) {
+//         console.error('Error checking user login status:', error);
+//     }
+// };
 
 
   export const CustomerSignup = async (email, password, object) => {
@@ -78,6 +78,7 @@ const firebaseConfig = {
         //   const imageUrl = await uploadImageToStorage(object.imageUri, user.uid);
         //   object.imageUri = imageUrl
           await setDoc(doc(db, "Customers", user.uid), object);
+        //   await sendWelcomeEmail(email, object.name)
           return user;
       } catch (error) {
           console.error('Sign up error:', error);
@@ -95,6 +96,7 @@ const firebaseConfig = {
         await setDoc(doc(db, "Providers", user.uid), object);
         const userRef = doc(db, "Providers", user.uid);
         const userInfo = await getDoc(userRef)
+        // await sendWelcomeEmail(email, object.name)
         return userInfo.data();
     } catch (error) {
         console.error('Sign up error:', error);
@@ -121,7 +123,7 @@ export const loginProvider = async (email, password, service) => {
     try {
         const userCredential = await signInWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        
+    
         // Fetching user document
         const userRef = doc(db, "Providers", user.uid);
         const userInfoRef = await getDoc(userRef);
@@ -502,12 +504,13 @@ export async function signupWithService(email, password, object) {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
-        // console.log('User signed up:', user.uid);
-        // await setDoc(doc(db, "Providers", user.uid), object);
-        // const userRef = doc(db, "Providers", user.uid); // Reference to the specific service collection
-        // const userInfoRef = await getDoc(userRef);
-        // const userInfo = userInfoRef.data()
-        // const userData = userInfo
+        console.log('User signed up:', user.uid);
+        await setDoc(doc(db, "Providers", user.uid), object);
+        const userRef = doc(db, "Providers", user.uid); // Reference to the specific service collection
+        const userInfoRef = await getDoc(userRef);
+        const userInfo = userInfoRef.data()
+        const userData = userInfo
+        // await sendWelcomeEmail(email, object.name)
         return user;
     } catch (error) {
         console.error(`Sign up error:`, error);
@@ -690,3 +693,57 @@ export async function sendPasswordReset(email) {
 }
 
 
+export const checkIfUserIsLoggedIn = async () => {
+    try {
+      const user = auth.currentUser;
+      return user; // Return the user object if logged in, otherwise null
+    } catch (error) {
+      console.error('Error checking user login status:', error);
+      throw error;
+    }
+  };
+  
+ export const sendWelcomeEmail = async (email, displayName) => {
+    const apiKey = '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';
+    const senderEmail = 'homepartyhelp.00@gmail.com';
+    const senderName = 'Home Party Help';
+    const recipientEmail = email;
+    const recipientName = displayName || 'User';
+
+    try {
+        const response = await axios.post(
+            'https://api.brevo.com/v3/smtp/email',
+            {
+                sender: { name: senderName, email: senderEmail },
+                to: [{ email: recipientEmail, name: recipientName }],
+                subject: 'Welcome to Our Platform!',
+                htmlContent: `
+                    <html>
+                        <head></head>
+                        <body>
+                            <p>Hello ${recipientName},</p>
+                            <p>Welcome to our platform! We're excited to have you on board.</p>
+                            <p>Feel free to explore and enjoy our services.</p>
+                            <p>Best regards,</p>
+                            <p>Your Team</p>
+                        </body>
+                    </html>
+                `,
+            },
+            {
+                headers: {
+                    'accept': 'application/json',
+                    'api-key': apiKey,
+                    'content-type': 'application/json',
+                },
+            }
+        );
+
+        console.log('Welcome email sent successfully.');
+        console.log(response.data);
+    } catch (error) {
+        console.error('Error sending welcome email:', error.response.data);
+    }
+};
+
+  
